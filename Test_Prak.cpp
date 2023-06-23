@@ -22,7 +22,7 @@ int main() {
         Json::Value request(Json::objectValue);
         request["jsonrpc"] = "2.0";
         request["id"] = 1;
-        //request["method"] = "JSON-RPC_Method";
+        //request["method"] = "eth_call";
         Json::Value params(Json::arrayValue);
         params.append(ownerAddress);
         request["params"] = params;
@@ -32,9 +32,7 @@ int main() {
 
 
         Json::Value response;
-        //client.CallMethod(request);
-        //std::string a;
-        client.CallMethod("eth_call", request, response);
+        client.CallMethod(request["method"].asString(), request, response);
         /*Створюється об'єкт response типу Json::Value,
          який міститиме відповідь від JSON-RPC-сервера.
          Потім викликається метод CallMethod об'єкта client,
