@@ -57,6 +57,7 @@ int main() {
                     nftUrl = nft["url"].asString();
 
                   
+                    //Парсинг
 
                     std::cout << "NFT URL: " << nftUrl << std::endl;
                 }
