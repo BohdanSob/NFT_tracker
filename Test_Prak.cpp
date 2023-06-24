@@ -1,8 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <jsonrpccpp/client.h>
 #include <jsonrpccpp/client/connectors/httpclient.h>
 #include <jsonrpccpp/common/exception.h>
+#include <json.h> 
 
 int main() {
     std::string url = "https://polygon-mainnet.infura.io/v3/<INFURA_API_KEY>";
@@ -22,7 +23,7 @@ int main() {
         Json::Value request(Json::objectValue);
         request["jsonrpc"] = "2.0";
         request["id"] = 1;
-        //request["method"] = "eth_call";
+        request["method"] = "eth_call";
         Json::Value params(Json::arrayValue);
         params.append(ownerAddress);
         request["params"] = params;
@@ -32,6 +33,7 @@ int main() {
 
 
         Json::Value response;
+        //client.CallMethod("eth_call", request, response);
         client.CallMethod(request["method"].asString(), request, response);
         /*Створюється об'єкт response типу Json::Value,
          який міститиме відповідь від JSON-RPC-сервера.
@@ -50,7 +52,15 @@ int main() {
             for (const auto& nft : nftList) {
                 std::string nftUrl;
 
-                // Извлекаем URL из NFT и парсим его определенным образом
+                // Извлекаем URL из NFT
+                if (nft.isMember("url")) {
+                    nftUrl = nft["url"].asString();
+
+                  
+
+                    std::cout << "NFT URL: " << nftUrl << std::endl;
+                }
+
 
                 std::cout << "NFT URL: " << nftUrl << std::endl;
             }
